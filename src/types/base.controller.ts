@@ -1,5 +1,6 @@
 import { Response } from "express";
 import { HttpError } from "./custom.error";
+import { ValidationError } from "joi";
 
 export class BaseController {
   /**
@@ -23,6 +24,8 @@ export class BaseController {
   public errorHandler(res: Response, error: any) {
     if (error instanceof HttpError) {
       return this.responseHandler(res, error.message, error.status);
+    } else if (error instanceof ValidationError) {
+      this.responseHandler(res, { error: error.details[0].message }, 400);
     } else {
       return this.responseHandler(res, { error: error }, 500);
     }

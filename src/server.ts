@@ -3,7 +3,7 @@ import express, { Application } from "express";
 import * as http from "http";
 
 const app = express();
-
+app.use(express.json());
 export default class Server {
   //Load router
   router(routes: (app: Application) => void) {
