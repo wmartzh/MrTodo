@@ -31,6 +31,7 @@ model User {
   updatedAt    DateTime
   subscription Subscription?
   subject      Subject[]
+  task         Task[]
 }
 
 model Subscription {
@@ -51,8 +52,10 @@ model Task {
   dueDate     DateTime?
   state       TaskState @default(DRAFT)
   grade       Decimal?
+  userId      Int
   subjectId   Int?
   subject     Subject?  @relation(fields: [subjectId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
   createdAt   DateTime  @default(now())
   updatedAt   DateTime
 }

@@ -23,7 +23,7 @@ export class BaseController {
    */
   public errorHandler(res: Response, error: any) {
     if (error instanceof HttpError) {
-      return this.responseHandler(res, error.message, error.status);
+      return this.responseHandler(res, error.error, error.status);
     } else if (error instanceof ValidationError) {
       this.responseHandler(res, { error: error.details[0].message }, 400);
     } else {
