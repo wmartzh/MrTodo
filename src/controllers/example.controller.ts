@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import exampleService from "../services/example.service";
 import { BaseController } from "../types/base.controller";
 class ExampleController extends BaseController {
-  helloWorld(_req: Request, res: Response) {
+  helloWorld(_req: Request | any, res: Response) {
     this.responseHandler(res, exampleService.getMessage(), 200);
   }
 }

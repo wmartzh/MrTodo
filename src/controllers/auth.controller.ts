@@ -42,12 +42,9 @@ class AuthController extends BaseController {
     try {
       const data = await LoginSchema.validateAsync(req.body);
       const result = await authService.login(data.email, data.password);
+
       this.responseHandler(res, result, 200);
     } catch (error: any) {
-      console.log(
-        "🔰 > file: auth.controller.ts > line 47 > AuthController > login > error",
-        error
-      );
       this.errorHandler(res, error);
     }
   }
