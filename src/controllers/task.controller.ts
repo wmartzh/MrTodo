@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+
 import { Request, Response } from "express";
 import { getUser } from "../helpers/auth.utils";
 import { ChangeStateSchema, CreateTaskSchema } from "../models/tasks.model";
