@@ -1,12 +1,25 @@
 import { Subject, User } from "@prisma/client";
 import client from "../database/client";
-import { CustomError } from "../types/custom.error";
-interface CreateTask {
+import { CustomError, HttpError } from "../types/custom.error";
+interface CreateSubject {
   name: string;
   detail?: string;
   color?: string;
 }
 class SubjectService {
+  async findById(userId: number, subjectId: number) {
+    const subject = await client.subject.findFirst({
+      where: {
+        userId,
+        id: subjectId,
+      },
+    });
+    if (!subject) {
+      throw new HttpError({ message: "Subject not found" }, 404);
+    }
+    return subject;
+  }
+
   // static create(user: any, subjectData: any): any {
   //   throw new Error("Method not implemented.");
   // }
