@@ -1,4 +1,4 @@
-import { Subject, User } from "@prisma/client";
+import { Subject, TaskState, User } from "@prisma/client";
 import client from "../database/client";
 import { CustomError, HttpError } from "../types/custom.error";
 interface CreateSubject {
@@ -24,6 +24,20 @@ class SubjectService {
       throw new HttpError({ message: "Subject not found" }, 404);
     }
     return subject;
+  }
+  /**
+   * "Get all subject for a user."
+   *
+   * The function subject a userId as an argument and returns a list of subject
+   * @param {number} userId - number
+   * @returns A promise that resolves to an array of subject.
+   */
+  getSujectByUserId(userId: number) {
+    return client.subject.findMany({
+      where: {
+        userId,
+      },
+    });
   }
 
   // static create(user: any, subjectData: any): any {
@@ -51,18 +65,44 @@ class SubjectService {
   }
 
   /**
-   * "Get all subject for a user."
-   *
-   * The function subject a userId as an argument and returns a list of subject
-   * @param {number} userId - number
-   * @returns A promise that resolves to an array of subject.
+   * It subject an id and a subject, and returns the updated subject
+   * @param {number} id - The id of the subject to update
+   * @param {subject} subject - subject - The subject object that we want to update.
+   * @returns The updated subject
    */
-  getSujectByUserId(userId: number) {
-    return client.subject.findMany({
-      where: {
-        userId,
-      },
+  async update(userId: number, id: number, subject: any) {
+    if (
+      subject.state &&
+      !Object.values(TaskState).includes(subject.state as TaskState)
+    ) {
+      throw new HttpError({ message: "Invalid State" }, 400);
+    }
+    const existSubject = await this.findById(userId, id);
+
+    if (!existSubject) {
+      throw new HttpError({ message: "Subject doesn't exist" }, 404);
+    }
+    return client.subject.update({
+      where: { id },
+      data: { updatedAt: new Date(), ...subject },
     });
+  }
+
+  /**
+   * If the state is not a valid state, throw an error, otherwise update the subject with the new state.
+   * @param {number} userId - The id of the user who owns the subject
+   * @param {number} subjectId - The id of the subject to be updated.
+   * @param {string} state - string
+   * @returns The updated subject
+   */
+
+  async changeState(userId: number, subjectId: number, state: string) {
+    const result = await this.update(userId, subjectId, { state });
+
+    if (!result) {
+      throw new HttpError({ error: "Subject couldn't update correctly" }, 500);
+    }
+    return { message: "Subject was updated correctly" };
   }
 }
 export default SubjectService;

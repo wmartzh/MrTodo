@@ -5,3 +5,7 @@ export const CreateSubjectSchema = Joi.object({
   detail: Joi.string(),
   color: Joi.date(),
 });
+
+export const ChangeStateSchema = Joi.object({
+  state: Joi.string(),
+});
