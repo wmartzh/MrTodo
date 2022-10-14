@@ -1,0 +1,9 @@
+import { Router } from "express";
+import subjectController from "../controllers/subject.controller";
+
+export default Router().post("/", (req, res) =>
+  subjectController.create(req, res)
+);
+//   .get("/", (req, res) => materiaController.getTaskByUser(req, res))
+//   .get("/:id", (req, res) => materiaController.getTaskById(req, res))
+//   .put("/:id", (req, res) => materiaController.changeState(req, res));
