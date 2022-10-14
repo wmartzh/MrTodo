@@ -1,13 +1,26 @@
 import { User } from "@prisma/client";
-import prisma from "../database/client";
+import client from "../database/client";
 class UserService {
   /**
    * It creates a new user in the database using the data provided in the user argument
    * @param {User} user - User - This is the user object that we're passing in.
    * @returns A promise that resolves to the created user.
    */
-  createUser(user: User) {
-    return prisma.user.create({ data: user });
+  async createUser(user: User) {
+    //prisma.subscription.create();
+    let renewalDates = new Date();
+
+    let expirationDates = new Date();
+    expirationDates.setDate(expirationDates.getDate() + 30);
+    let createdUser = await prisma.user.create({ data: user });
+    let subscription = await prisma.subscription.create({
+      data: { userId: createdUser.id,
+        expirationDate: expirationDates,
+        lastRenew: renewalDates,
+       } 
+    });
+    //console.log(createdUser.id);
+    return createdUser;
   }
 
   /**
@@ -16,7 +29,7 @@ class UserService {
    * @returns A promise that resolves to a user object.
    */
   findUserByEmail(email: string) {
-    return prisma.user.findFirst({ where: { email } });
+    return client.user.findFirst({ where: { email } });
   }
 }
 
