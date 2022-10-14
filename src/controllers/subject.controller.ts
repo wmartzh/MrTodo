@@ -26,7 +26,7 @@ class SubjectController extends BaseController {
     }
   }
   /**
-   * It gets the user id from the request object, and then passes it to the new subjectService().getTaskByUserId
+   * It gets the user id from the request object, and then passes it to the new subjectService().getSubjectByUserId
    * function
    * @param {Request | any} req - Request | any: This is the request object that is passed to the route
    * handler.
