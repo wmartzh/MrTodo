@@ -30,5 +30,13 @@ class SubjectService {
     }
     return { message: "Subject was created successfully" };
   }
+
+  getSujectByUserId(userId: number) {
+    return client.subject.findMany({
+      where: {
+        userId,
+      },
+    });
+  }
 }
 export default SubjectService;

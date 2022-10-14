@@ -19,5 +19,17 @@ class SubjectController extends BaseController {
       this.errorHandler(res, error);
     }
   }
+
+  async getSujectByUser(req: Request | any, res: Response) {
+    try {
+      this.responseHandler(
+        res,
+        await new subjectService().getSujectByUserId(req.user.id),
+        200
+      );
+    } catch (error) {
+      this.errorHandler(res, error);
+    }
+  }
 }
 export default new SubjectController();
