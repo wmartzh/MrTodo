@@ -11,8 +11,8 @@ class SubjectService {
   //   throw new Error("Method not implemented.");
   // }
   /**
-   * It creates a new task in the database
-   * @param {Subject} subject - The task object that you want to create.
+   * It creates a new subject in the database
+   * @param {Subject} subject - The subject object that you want to create.
    * @returns A promise
    */
   async create(user: User, subject: Subject) {
@@ -31,6 +31,13 @@ class SubjectService {
     return { message: "Subject was created successfully" };
   }
 
+  /**
+   * "Get all subject for a user."
+   *
+   * The function subject a userId as an argument and returns a list of subject
+   * @param {number} userId - number
+   * @returns A promise that resolves to an array of subject.
+   */
   getSujectByUserId(userId: number) {
     return client.subject.findMany({
       where: {
