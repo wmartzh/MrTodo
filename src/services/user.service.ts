@@ -7,13 +7,13 @@ class UserService {
    * @returns A promise that resolves to the created user.
    */
   async createUser(user: User) {
-    //prisma.subscription.create();
+    //client.subscription.create();
     let renewalDates = new Date();
 
     let expirationDates = new Date();
     expirationDates.setDate(expirationDates.getDate() + 30);
-    let createdUser = await prisma.user.create({ data: user });
-    let subscription = await prisma.subscription.create({
+    let createdUser = await client.user.create({ data: user });
+    let subscription = await client.subscription.create({
       data: { userId: createdUser.id,
         expirationDate: expirationDates,
         lastRenew: renewalDates,

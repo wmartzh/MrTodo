@@ -6,9 +6,14 @@ class SubscriptionService {
   async updateSubscription(userId: string, subscriptionUpdate: any) {
       //console.log("UserID:",userId);
       try {
+        let expirationDates = new Date();
+        expirationDates.setDate(expirationDates.getDate() + 30);
         const subscription = await client.subscription.update({
           where:{userId:parseInt(userId)},
-          data:{type:subscriptionUpdate}
+          data:{type:subscriptionUpdate,
+            expirationDate: expirationDates,
+            lastRenew: new Date(Date.now())
+          }
         });
         if(!subscription){
           throw new HttpError({ message: "Subscription not found" }, 404);
