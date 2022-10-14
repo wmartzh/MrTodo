@@ -7,6 +7,12 @@ interface CreateSubject {
   color?: string;
 }
 class SubjectService {
+  /**
+   * It finds a subject by its id and userId, and if it doesn't exist, it throws an error
+   * @param {number} userId - The id of the user who owns the subject
+   * @param {number} subjectId - number - This is the id of the subject we want to find.
+   * @returns The subject that was found.
+   */
   async findById(userId: number, subjectId: number) {
     const subject = await client.subject.findFirst({
       where: {

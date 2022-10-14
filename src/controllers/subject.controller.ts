@@ -44,6 +44,13 @@ class SubjectController extends BaseController {
       this.errorHandler(res, error);
     }
   }
+
+  /**
+   * It gets a subject by id
+   * @param {Request | any} req - Request | any: This is the request object that is passed to the route
+   * handler.
+   * @param {Response} res - Response - This is the response object that will be sent back to the client.
+   */
   async getSubjectById(req: Request | any, res: Response) {
     try {
       const { id } = req.params;
