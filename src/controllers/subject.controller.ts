@@ -6,6 +6,12 @@ import subjectService from "../services/subject.service";
 import { BaseController } from "../types/base.controller";
 
 class SubjectController extends BaseController {
+  /**
+   * It validates the request body against the CreateSubjectSchema, then calls the new subjectService().create
+   * function, and finally sends the response
+   * @param {Request | any} req - Request | any:
+   * @param {Response} res - Response - The response object that will be returned to the client.
+   */
   async create(req: Request | any, res: Response) {
     try {
       const subjectData = await CreateSubjectSchema.validateAsync(req.body);
@@ -19,7 +25,13 @@ class SubjectController extends BaseController {
       this.errorHandler(res, error);
     }
   }
-
+  /**
+   * It gets the user id from the request object, and then passes it to the new subjectService().getTaskByUserId
+   * function
+   * @param {Request | any} req - Request | any: This is the request object that is passed to the route
+   * handler.
+   * @param {Response} res - Response - This is the response object that will be sent back to the client.
+   */
   async getSujectByUser(req: Request | any, res: Response) {
     try {
       this.responseHandler(
