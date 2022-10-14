@@ -11,7 +11,7 @@ class SubjectController extends BaseController {
       const subjectData = await CreateSubjectSchema.validateAsync(req.body);
       this.responseHandler(
         res,
-        await subjectService.create(req.user, subjectData),
+        await new subjectService().create(req.user, subjectData),
         200
       );
       console.log(subjectData);
