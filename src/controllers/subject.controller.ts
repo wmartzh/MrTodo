@@ -31,11 +31,11 @@ class SubjectController extends BaseController {
    * handler.
    * @param {Response} res - Response - This is the response object that will be sent back to the client.
    */
-  async getSujectByUser(req: Request | any, res: Response) {
+  async getSubjectByUser(req: Request | any, res: Response) {
     try {
       this.responseHandler(
         res,
-        await subjectService.getSujectByUserId(req.user.id),
+        await subjectService.getSubjectByUserId(req.user.id),
         200
       );
     } catch (error) {
