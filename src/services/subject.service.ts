@@ -87,22 +87,5 @@ class SubjectService {
       data: { updatedAt: new Date(), ...subject },
     });
   }
-
-  /**
-   * If the state is not a valid state, throw an error, otherwise update the subject with the new state.
-   * @param {number} userId - The id of the user who owns the subject
-   * @param {number} subjectId - The id of the subject to be updated.
-   * @param {string} state - string
-   * @returns The updated subject
-   */
-
-  async changeState(userId: number, subjectId: number, state: string) {
-    const result = await this.update(userId, subjectId, { state });
-
-    if (!result) {
-      throw new HttpError({ error: "Subject couldn't update correctly" }, 500);
-    }
-    return { message: "Subject was updated correctly" };
-  }
 }
 export default new SubjectService();
