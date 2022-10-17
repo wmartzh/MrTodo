@@ -43,6 +43,7 @@ model Subscription {
   userId         Int              @unique
   user           User             @relation(fields: [userId], references: [id])
   createdAt      DateTime         @default(now())
+  updatedAt      DateTime
 }
 
 model Task {
