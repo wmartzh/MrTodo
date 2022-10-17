@@ -1,5 +1,6 @@
 import { User } from "@prisma/client";
 import client from "../database/client";
+import subscriptionService from "./subscription.service";
 class UserService {
   /**
    * It creates a new user in the database using the data provided in the user argument
@@ -7,19 +8,8 @@ class UserService {
    * @returns A promise that resolves to the created user.
    */
   async createUser(user: User) {
-    //client.subscription.create();
-    let renewalDates = new Date();
-
-    let expirationDates = new Date();
-    expirationDates.setDate(expirationDates.getDate() + 30);
-    let createdUser = await client.user.create({ data: user });
-    let subscription = await client.subscription.create({
-      data: { userId: createdUser.id,
-        expirationDate: expirationDates,
-        lastRenew: renewalDates,
-       } 
-    });
-    //console.log(createdUser.id);
+    const createdUser = await client.user.create({ data: user });
+    await subscriptionService.create(createdUser.id);
     return createdUser;
   }
 
