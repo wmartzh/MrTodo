@@ -8,10 +8,15 @@ type UpdateSubscription = Pick<
 >;
 
 class SubscriptionService {
+  private setExpirationDate(subType: SubscriptionType) {
+    const newDate = new Date();
+    const amountOfDays = subType === SubscriptionType.PREMIUM ? 30 : 10000; //10000 is an arbitrary number
+    newDate.setDate(newDate.getDate() + amountOfDays);
+    return newDate;
+  }
   async create(userId: number) {
     const today = new Date();
-    const expirationDate = today;
-    expirationDate.setDate(today.getDate() + 100000);
+    const expirationDate = this.setExpirationDate(SubscriptionType.FREE);
     return client.subscription.create({
       data: {
         userId,
@@ -40,9 +45,9 @@ class SubscriptionService {
     }
   }
   async changeSubscriptionState(userId: number, type: SubscriptionType) {
-    let expirationDates = new Date();
+    let expirationDates = this.setExpirationDate(type);
     const today = new Date();
-    expirationDates.setDate(expirationDates.getDate() + 30);
+
     this.update(userId, {
       type,
       detail: `Last subscription: ${today.toString()}`,
@@ -50,7 +55,7 @@ class SubscriptionService {
       lastRenew: today,
     });
     const subState =
-      type === SubscriptionType.PREMIUM ? "subscribed" : "unsπubscribed";
+      type === SubscriptionType.PREMIUM ? "subscribed" : "unsubscribed";
     return {
       message: `User was ${subState} successfully`,
     };
