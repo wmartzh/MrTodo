@@ -105,4 +105,4 @@ class SubjectService {
     return { message: "Subject was updated correctly" };
   }
 }
-export default SubjectService;
+export default new SubjectService();

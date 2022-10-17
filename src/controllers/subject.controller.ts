@@ -11,7 +11,7 @@ import { HttpError } from "../types/custom.error";
 
 class SubjectController extends BaseController {
   /**
-   * It validates the request body against the CreateSubjectSchema, then calls the new subjectService().create
+   * It validates the request body against the CreateSubjectSchema, then calls thesubjectService.create
    * function, and finally sends the response
    * @param {Request | any} req - Request | any:
    * @param {Response} res - Response - The response object that will be returned to the client.
@@ -21,7 +21,7 @@ class SubjectController extends BaseController {
       const subjectData = await CreateSubjectSchema.validateAsync(req.body);
       this.responseHandler(
         res,
-        await new subjectService().create(req.user, subjectData),
+        await subjectService.create(req.user, subjectData),
         200
       );
       console.log(subjectData);
@@ -30,7 +30,7 @@ class SubjectController extends BaseController {
     }
   }
   /**
-   * It gets the user id from the request object, and then passes it to the new subjectService().getSubjectByUserId
+   * It gets the user id from the request object, and then passes it to thesubjectService.getSubjectByUserId
    * function
    * @param {Request | any} req - Request | any: This is the request object that is passed to the route
    * handler.
@@ -40,7 +40,7 @@ class SubjectController extends BaseController {
     try {
       this.responseHandler(
         res,
-        await new subjectService().getSujectByUserId(req.user.id),
+        await subjectService.getSujectByUserId(req.user.id),
         200
       );
     } catch (error) {
@@ -63,7 +63,7 @@ class SubjectController extends BaseController {
       }
       this.responseHandler(
         res,
-        await new subjectService().findById(req.user.id, Number(id)),
+        await subjectService.findById(req.user.id, Number(id)),
         200
       );
     } catch (error) {
@@ -87,7 +87,7 @@ class SubjectController extends BaseController {
 
       this.responseHandler(
         res,
-        await new subjectService().changeState(req.user.id, Number(id), state),
+        await subjectService.changeState(req.user.id, Number(id), state),
         200
       );
     } catch (error) {
