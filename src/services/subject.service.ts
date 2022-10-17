@@ -71,12 +71,6 @@ class SubjectService {
    * @returns The updated subject
    */
   async update(userId: number, id: number, subject: any) {
-    if (
-      subject.state &&
-      !Object.values(TaskState).includes(subject.state as TaskState)
-    ) {
-      throw new HttpError({ message: "Invalid State" }, 400);
-    }
     const existSubject = await this.findById(userId, id);
 
     if (!existSubject) {

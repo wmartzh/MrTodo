@@ -1,10 +1,5 @@
-import { User } from "@prisma/client";
 import { Request, Response } from "express";
-import { getUser } from "../helpers/auth.utils";
-import {
-  ChangeStateSchema,
-  CreateSubjectSchema,
-} from "../models/subject.model";
+import { CreateSubjectSchema } from "../models/subject.model";
 import subjectService from "../services/subject.service";
 import { BaseController } from "../types/base.controller";
 import { HttpError } from "../types/custom.error";
@@ -64,30 +59,6 @@ class SubjectController extends BaseController {
       this.responseHandler(
         res,
         await subjectService.findById(req.user.id, Number(id)),
-        200
-      );
-    } catch (error) {
-      this.errorHandler(res, error);
-    }
-  }
-
-  /**
-   * It changes the state of a subject
-   * @param {Request | any} req - Request | any: This is the request object that is passed to the route
-   * handler.
-   * @param {Response} res - Response - The response object that will be sent back to the client.
-   */
-  async changeState(req: Request | any, res: Response) {
-    try {
-      const { id } = req.params;
-      if (!id) {
-        throw new HttpError({ error: "Subject id is required" }, 400);
-      }
-      const { state } = await ChangeStateSchema.validateAsync(req.body);
-
-      this.responseHandler(
-        res,
-        await subjectService.changeState(req.user.id, Number(id), state),
         200
       );
     } catch (error) {
