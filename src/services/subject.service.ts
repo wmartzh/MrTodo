@@ -1,11 +1,7 @@
 import { Subject, TaskState, User } from "@prisma/client";
 import client from "../database/client";
 import { CustomError, HttpError } from "../types/custom.error";
-interface CreateSubject {
-  name: string;
-  detail?: string;
-  color?: string;
-}
+
 class SubjectService {
   /**
    * It finds a subject by its id and userId, and if it doesn't exist, it throws an error
@@ -32,7 +28,7 @@ class SubjectService {
    * @param {number} userId - number
    * @returns A promise that resolves to an array of subject.
    */
-  getSujectByUserId(userId: number) {
+  getSubjectByUserId(userId: number) {
     return client.subject.findMany({
       where: {
         userId,
